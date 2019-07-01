@@ -1,6 +1,6 @@
 package Logica;
 
-//21:11
+//Modificado 23:06:54
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
