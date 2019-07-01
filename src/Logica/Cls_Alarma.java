@@ -10,8 +10,9 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import Cls_Sonido.Sonidos;
 
-public class Cls_Alarma {
 
+public class Cls_Alarma {
+    
     private DefaultTableModel TABLA;
     private ResultSet RS;
     private PreparedStatement PS;

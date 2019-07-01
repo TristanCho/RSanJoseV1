@@ -4,15 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
+import Logica.VariablesConfig;
 
 
 
 public class Cls_Conexion {
     
-  
+    private final VariablesConfig DatosConfig;
+    
+    
     private static final String DRIVER = "com.mysql.jdbc.Driver";// Hacemos referencia al DRIVER que hemos importado para hacer la conexión
-    private static final String UserDDBB = "cristhian";
+    private static final String UserDDBB ="cristhian";
     private static final String UserPass = "cristhian";
     private static final String RemoteServer = "89.129.146.6";
     //private static final String LocalServer = "192.168.1.20";
@@ -22,6 +24,18 @@ public class Cls_Conexion {
     private Connection CN;
 
     public Cls_Conexion() {
+        
+        DatosConfig = new VariablesConfig();
+        
+      DatosConfig.dimeUser();
+        System.out.println("Usuario pido datos actuales"+UserDDBB);
+     DatosConfig.dimePass();
+      DatosConfig.dimeDDBB();
+      DatosConfig.dimePuerto();
+      DatosConfig.dimeLocalServer();
+      DatosConfig.dimeRemoteServer();
+      DatosConfig.dimeRemoteServer2();
+      
         CN = null;
     }
         

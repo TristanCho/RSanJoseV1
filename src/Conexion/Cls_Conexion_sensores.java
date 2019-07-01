@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.util.Properties;
 
 public class Cls_Conexion_sensores {
     
-  
-    private static final String DRIVER = "com.mysql.jdbc.Driver";// Hacemos referencia al DRIVER que hemos importado para hacer la conexión
+    Properties Propiedades = new Properties();
+    public static final String DRIVER = "com.mysql.jdbc.Driver";// Hacemos referencia al DRIVER que hemos importado para hacer la conexión
     private static final String UserDDBB = "cristhian";
     private static final String PassDDBB = "cristhian";
     private static final String RemoteServer = "89.129.146.6";
@@ -19,6 +20,8 @@ public class Cls_Conexion_sensores {
     private Connection CN;
 
     public Cls_Conexion_sensores() {
+        
+        
         CN = null;}
         
     //Este método nos retorna la conexión
