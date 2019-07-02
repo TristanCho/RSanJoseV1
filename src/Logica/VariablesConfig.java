@@ -31,8 +31,8 @@ public class VariablesConfig {
         InputStream Archivo;
        
         try {
-            Archivo = new FileInputStream("..//Archivador/ArchivoPropiedades.properties");
-            //Archivo = new FileInputStream("C:\\Domoyaya\\Archivador/ArchivoPropiedades.properties");
+            Archivo = new FileInputStream("src/Archivador/ArchivoPropiedades.properties");
+            //Archivo = new FileInputStream("..//Archivador/ArchivoPropiedades.properties");
             Propiedades.load(Archivo);
 
         } catch (IOException ex) {
@@ -47,6 +47,15 @@ public class VariablesConfig {
          RemoteServer = Propiedades.getProperty("RemoteServer");
          RemoteServer2 = Propiedades.getProperty("RemoteServer2");
          Puerto = Propiedades.getProperty("Puerto");
+         /*
+         System.out.println("UserDDBB==== "+UserDDBB);
+         System.out.println("PassDDBB==== "+PassDDBB);
+         System.out.println("DDBB==== "+DDBB);
+         System.out.println("LocalServer====="+LocalServer);
+         System.out.println("RemoteServer====="+RemoteServer);
+         System.out.println("RemoteServer2====="+RemoteServer2);
+         System.out.println("Puerto====="+Puerto);
+         */
                
  }
 public String dimeUser(){
@@ -74,8 +83,10 @@ public void setFormulario(String UserDDBB,String PassDDBB,String DDBB,String Pue
         Propiedades.setProperty("Puerto", Puerto);
         
             //Graba el Archivo con las modificaciones realizadas
-            Propiedades.store(new FileWriter("..//Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
-            //Propiedades.store(new FileWriter("C:\\Domoyaya\\Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
+           
+            //Propiedades.store(new FileWriter("..//Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
+            Propiedades.store(new FileWriter("src/Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
+            
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,6 +95,7 @@ public void setFormulario(String UserDDBB,String PassDDBB,String DDBB,String Pue
 public String dimePass(){
      return PassDDBB;
  } 
+/////////////////////////////////////////////Pendiente por hacer los Setters de cada metodo Getter*********************************************
 public String dimeDDBB(){
      return DDBB;
  } 

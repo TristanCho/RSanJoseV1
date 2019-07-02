@@ -14,30 +14,57 @@ public class Cls_Conexion {
     
     
     private static final String DRIVER = "com.mysql.jdbc.Driver";// Hacemos referencia al DRIVER que hemos importado para hacer la conexión
-    private static String UserDDBB;
-    //public  final String UserDDBB =DatosConfig.dimeUser();
-    private static String UserPass = "cristhian";
+    String UserDDBB;
+    String PassDDBB = "VacioPass";
     //private static final String RemoteServer = "89.129.146.6";
-    private static  String RemoteServer = "192.168.1.20";
-    private static  String PUERTO = "3306";
-    private static  String DDBB = "Gea";
-    private static  String UrlRemota = "jdbc:mysql://"+RemoteServer+":"+PUERTO+"/"+DDBB+"?autoReconnect=true&useSSL=false";
+    //private static  String RemoteServer = "192.168.1.20";
+    String LocalServer = "VacioLocalServer";
+    String RemoteServer = "VacioRemoteServer";
+    String RemoteServer2 = "VacioRemoteServer2";
+    String PUERTO = "VacioPuerto";
+    String DDBB = "VacioDDBB";
+    String UrlRemota= "VacioURLREMOTA";
     private Connection CN;
+    
+    
+  
 
     public Cls_Conexion() {
-        
+          System.out.println("UserDDBB==== "+UserDDBB);
+         System.out.println("PassDDBB==== "+PassDDBB);
+         System.out.println("DDBB==== "+DDBB);
+         System.out.println("LocalServer====="+LocalServer);
+         System.out.println("RemoteServer====="+RemoteServer);
+         System.out.println("RemoteServer2====="+RemoteServer2);
+         System.out.println("Puerto====="+PUERTO);
+         
+         System.out.println("//////////////////////////////////////");
         DatosConfig = new VariablesConfig();
         
         UserDDBB =DatosConfig.dimeUser();
-        System.out.println(DatosConfig.dimeUser()+"Mazda");
-        System.out.println("Usuario pido datos actuales"+UserDDBB);
-     DatosConfig.dimePass();
-      DatosConfig.dimeDDBB();
-      DatosConfig.dimePuerto();
-      DatosConfig.dimeLocalServer();
-      DatosConfig.dimeRemoteServer();
-      DatosConfig.dimeRemoteServer2();
+       // DatosConfig.setUser();
+       System.out.println("UserDDBB   Modificado  ???==== "+UserDDBB);
+        PassDDBB = DatosConfig.dimePass();
+        DDBB =DatosConfig.dimeDDBB();
+        RemoteServer = DatosConfig.dimeRemoteServer();
+        RemoteServer2 = DatosConfig.dimeRemoteServer2();
+        LocalServer = DatosConfig.dimeLocalServer();
+        PUERTO = DatosConfig.dimePuerto();
+        UrlRemota=  "jdbc:mysql://"+RemoteServer+":"+PUERTO+"/"+DDBB+"?autoReconnect=true&useSSL=false";
       
+         System.out.println("UserDDBB==== "+UserDDBB);
+         System.out.println("PassDDBB==== "+PassDDBB);
+         System.out.println("DDBB==== "+DDBB);
+         System.out.println("LocalServer====="+LocalServer);
+         System.out.println("RemoteServer====="+RemoteServer);
+         System.out.println("RemoteServer2====="+RemoteServer2);
+         System.out.println("Puerto====="+PUERTO);
+      
+      
+      
+      
+       //System.out.println("Usuario dimeUser()==="+UserDDBB);
+        //System.out.println("Usuario desde el formulario=="+getText.jtf_UserDDBB);
         CN = null;
     }
         
@@ -48,7 +75,7 @@ public class Cls_Conexion {
         while(CN==null){
             
             Class.forName(DRIVER);
-            CN = DriverManager.getConnection(UrlRemota, UserDDBB, UserPass);
+            CN = DriverManager.getConnection(UrlRemota, UserDDBB, PassDDBB);
             System.out.println("Conectando...");
             //Thread.sleep(5000);
             contador++;

@@ -21,7 +21,7 @@ public class Cls_Conexion_sensores {
 
     public Cls_Conexion_sensores() {
         
-        System.out.println("UserDDBB en ConexionSensores "+UserDDBB);
+        //System.out.println("UserDDBB en ConexionSensores "+UserDDBB);
         CN = null;}
         
     //Este método nos retorna la conexión
@@ -29,7 +29,7 @@ public class Cls_Conexion_sensores {
         try{
             Class.forName(DRIVER);
             CN = DriverManager.getConnection(UrlRemota, UserDDBB, PassDDBB);
-            System.out.println("UserDDBB en ConexionSensores.Getconnectonn "+UserDDBB);
+            //System.out.println("UserDDBB en ConexionSensores.Getconnectonn "+UserDDBB);
             //System.out.println("Conexión establecida...");
           }catch(ClassNotFoundException | SQLException ex){
             //JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al conectar con la base de datos", JOptionPane.ERROR_MESSAGE);
