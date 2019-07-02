@@ -31,8 +31,8 @@ public class VariablesConfig {
         InputStream Archivo;
        
         try {
-            //Archivo = new FileInputStream("dist/Archivador/ArchivoPropiedades.properties");
-            Archivo = new FileInputStream("C:\\Domoyaya\\Archivador/ArchivoPropiedades.properties");
+            Archivo = new FileInputStream("..//Archivador/ArchivoPropiedades.properties");
+            //Archivo = new FileInputStream("C:\\Domoyaya\\Archivador/ArchivoPropiedades.properties");
             Propiedades.load(Archivo);
 
         } catch (IOException ex) {
@@ -74,8 +74,8 @@ public void setFormulario(String UserDDBB,String PassDDBB,String DDBB,String Pue
         Propiedades.setProperty("Puerto", Puerto);
         
             //Graba el Archivo con las modificaciones realizadas
-            //Propiedades.store(new FileWriter("src/Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
-            Propiedades.store(new FileWriter("C:\\Domoyaya\\Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
+            Propiedades.store(new FileWriter("..//Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
+            //Propiedades.store(new FileWriter("C:\\Domoyaya\\Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
