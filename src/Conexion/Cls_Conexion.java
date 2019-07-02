@@ -1,5 +1,5 @@
 package Conexion;
-//Modificado 23:06:54
+//Modificado 00:40:31
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

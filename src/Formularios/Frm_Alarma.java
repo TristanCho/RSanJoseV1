@@ -1,4 +1,4 @@
-//Modificado 23:06:54
+//Modificado 00:40:31
 package Formularios;
 
 import Logica.VariablesConfig;
