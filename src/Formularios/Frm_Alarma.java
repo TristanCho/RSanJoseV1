@@ -1053,7 +1053,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_UserDDBBActionPerformed
 
     private void btn_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditarActionPerformed
-
+        jbl_InfoConfiguracion.setText("No olvide Guardar los cambios");
         jtf_UserDDBB.setEnabled(true);
         jtf_PassDDBB.setEnabled(true);
         jtf_DDBB.setEnabled(true);
