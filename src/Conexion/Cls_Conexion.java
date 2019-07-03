@@ -10,7 +10,7 @@ import Logica.VariablesConfig;
 
 public class Cls_Conexion {
     
-    private final VariablesConfig DatosConfig;
+    private VariablesConfig DatosConfig;
     
     
     private static final String DRIVER = "com.mysql.jdbc.Driver";// Hacemos referencia al DRIVER que hemos importado para hacer la conexión
@@ -30,7 +30,7 @@ public class Cls_Conexion {
   
 
     public Cls_Conexion() {
-          System.out.println("UserDDBB==== "+UserDDBB);
+         System.out.println("UserDDBB==== "+UserDDBB);
          System.out.println("PassDDBB==== "+PassDDBB);
          System.out.println("DDBB==== "+DDBB);
          System.out.println("LocalServer====="+LocalServer);
