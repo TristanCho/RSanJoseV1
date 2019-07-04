@@ -88,7 +88,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagenes/Domoyaya - copia.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="DOMOYAYA 19-07-01"/>
+            <Property name="text" type="java.lang.String" value="DOMOYAYA 19-07-05"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder roundedCorners="true"/>

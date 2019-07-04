@@ -214,7 +214,7 @@ System.out.println("*****************************************Valor Index 0 = ");
         TITULO.setFont(new java.awt.Font("Segoe Script", 0, 32)); // NOI18N
         TITULO.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         TITULO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Domoyaya - copia.png"))); // NOI18N
-        TITULO.setText("DOMOYAYA 19-07-01");
+        TITULO.setText("DOMOYAYA 19-07-05");
         TITULO.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         javax.swing.GroupLayout jpanel_DomoyayaLayout = new javax.swing.GroupLayout(jpanel_Domoyaya);
