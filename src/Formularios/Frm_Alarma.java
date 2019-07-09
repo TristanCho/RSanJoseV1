@@ -1,6 +1,7 @@
 //Modificado 00:40:31
 package Formularios;
 
+import Conexion.Cls_Conexion;
 import Logica.VariablesConfig;
 import Logica.Cls_Alarma;
 import Logica.Cls_Sensores;
@@ -20,14 +21,20 @@ public class Frm_Alarma extends javax.swing.JFrame {
     private final Cls_Alarma Actividad;
     private final VariablesConfig DatosConfig;
     private final Timer Temporizador;
+    private Boolean tempIsPaused;
+
     private final List<JRadioButton> ListadoDeSensores;
+
+    private Cls_Conexion cnn;
 
     public Frm_Alarma() {
 
         initComponents();
 
-        Sensores_Registrados = new Cls_Sensores();
-        Actividad = new Cls_Alarma();
+        cnn = new Cls_Conexion();
+
+        Sensores_Registrados = new Cls_Sensores(cnn);
+        Actividad = new Cls_Alarma(cnn);
         DatosConfig = new VariablesConfig();
         ListadoDeSensores = new ArrayList<>();
 
@@ -42,32 +49,16 @@ public class Frm_Alarma extends javax.swing.JFrame {
         ListadoDeSensores.add(jlb_Sensor8);
         ListadoDeSensores.add(jlb_Sensor9);
         ListadoDeSensores.add(jlb_Sensor10);
-        
-       
 
-         
-            jtfSensor1.setEnabled(false);
-            jtfSensor2.setEnabled(false);
-            jtfSensor3.setEnabled(false);
-            jtfSensor4.setEnabled(false);
-            jtfSensor5.setEnabled(false);
-            jtfSensor6.setEnabled(false);
-            jtfSensor7.setEnabled(false);
-            jtfSensor8.setEnabled(false);
-            jtfSensor9.setEnabled(false);
-            jtfSensor10.setEnabled(false);
-            
-           
-            
-        
-      jtf_UserDDBB.setText(DatosConfig.dimeUser());
-      jtf_PassDDBB.setText(DatosConfig.dimePass());
-      jtf_DDBB.setText(DatosConfig.dimeDDBB());
-      jtf_Puerto.setText(DatosConfig.dimePuerto());
-      jtf_LocalServer.setText(DatosConfig.dimeLocalServer());
-      jtf_RemoteServer.setText(DatosConfig.dimeRemoteServer());
-      jtf_RemoteServer2.setText(DatosConfig.dimeRemoteServer2());
-      
+        Refresh_Tabulados_Sensores(false);
+
+        jtf_UserDDBB.setText(DatosConfig.dimeUser());
+        jtf_PassDDBB.setText(DatosConfig.dimePass());
+        jtf_DDBB.setText(DatosConfig.dimeDDBB());
+        jtf_Puerto.setText(DatosConfig.dimePuerto());
+        jtf_LocalServer.setText(DatosConfig.dimeLocalServer());
+        jtf_RemoteServer.setText(DatosConfig.dimeRemoteServer());
+        jtf_RemoteServer2.setText(DatosConfig.dimeRemoteServer2());
 
         int auxInt = 1;
         for (JRadioButton radioButton : ListadoDeSensores) {
@@ -75,7 +66,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
             radioButton.setSelected(rootPaneCheckingEnabled);
             auxInt++;
         }
-System.out.println("*****************************************Valor Index 0 = ");
+        System.out.println("*****************************************Valor Index 0 = ");
         jcb_armadoNotificaciones.setSelected(true);
         Actividad.Armado_Notificaciones = true;
 
@@ -83,16 +74,19 @@ System.out.println("*****************************************Valor Index 0 = ");
         setLocationRelativeTo(null);
 
         Temporizador = new Timer();
+        tempIsPaused = false;
         TimerTask Tarea = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Temporizador Actualizado");
-                try {
-                    listar_Actividad();
-                    listar_Sensores();
-                } catch (InterruptedException | ClassNotFoundException | SQLException ex) {
-                    Logger.getLogger(Frm_Alarma.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("Fallo en Temporizador");
+                if (!tempIsPaused) {
+                    System.out.println("Temporizador Actualizado");
+                    try {
+                        listar_Actividad();
+                        listar_Sensores();
+                    } catch (InterruptedException | ClassNotFoundException | SQLException ex) {
+                        Logger.getLogger(Frm_Alarma.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Fallo en Temporizador");
+                    }
                 }
             }
         };
@@ -107,24 +101,39 @@ System.out.println("*****************************************Valor Index 0 = ");
     }
 
     private void listar_Sensores() throws InterruptedException {
-        
+
         jtb_sensores.setModel(Sensores_Registrados.TomoDatos_Sensores());
         int auxInt = 0;
         for (JRadioButton radioButton : ListadoDeSensores) {
             radioButton.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(auxInt).getNombre()));
-            
+
             auxInt++;
         }
-            jtfSensor1.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(0).getNombre()));
-            jtfSensor2.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(1).getNombre()));
-            jtfSensor3.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(2).getNombre()));
-            jtfSensor4.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(3).getNombre()));
-            jtfSensor5.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(4).getNombre()));
-            jtfSensor6.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(5).getNombre()));
-            jtfSensor7.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(6).getNombre()));
-            jtfSensor8.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(7).getNombre()));
-            jtfSensor9.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(8).getNombre()));
-            jtfSensor10.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(9).getNombre()));
+        jtfSensor1.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(0).getNombre()));
+        jtfSensor2.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(1).getNombre()));
+        jtfSensor3.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(2).getNombre()));
+        jtfSensor4.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(3).getNombre()));
+        jtfSensor5.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(4).getNombre()));
+        jtfSensor6.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(5).getNombre()));
+        jtfSensor7.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(6).getNombre()));
+        jtfSensor8.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(7).getNombre()));
+        jtfSensor9.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(8).getNombre()));
+        jtfSensor10.setText(String.valueOf(Sensores_Registrados.SensorNumero.get(9).getNombre()));
+    }
+
+    private void Refresh_Tabulados_Sensores(Boolean estado) {
+        jtfSensor1.setEnabled(estado);
+        jtfSensor2.setEnabled(estado);
+        jtfSensor3.setEnabled(estado);
+        jtfSensor4.setEnabled(estado);
+        jtfSensor5.setEnabled(estado);
+        jtfSensor6.setEnabled(estado);
+        jtfSensor7.setEnabled(estado);
+        jtfSensor8.setEnabled(estado);
+        jtfSensor9.setEnabled(estado);
+        jtfSensor10.setEnabled(estado);
+        //Al modificar,  pausamos el timer principal y bloqueamos el tabcontrol.
+        tempIsPaused = estado;
     }
 
     @SuppressWarnings("unchecked")
@@ -229,6 +238,12 @@ System.out.println("*****************************************Valor Index 0 = ");
                 .addComponent(TITULO, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        Tabulados.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                TabuladosStateChanged(evt);
+            }
+        });
 
         jtb_sensores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -429,7 +444,7 @@ System.out.println("*****************************************Valor Index 0 = ");
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -446,7 +461,7 @@ System.out.println("*****************************************Valor Index 0 = ");
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 647, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
 
         Tabulados.addTab("REGISTROS", jPanel4);
@@ -467,7 +482,7 @@ System.out.println("*****************************************Valor Index 0 = ");
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addContainerGap(216, Short.MAX_VALUE))
         );
 
         Tabulados.addTab("GRÁFICOS", jPanel5);
@@ -647,7 +662,7 @@ System.out.println("*****************************************Valor Index 0 = ");
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(PANEL_CONFIGURACION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 169, Short.MAX_VALUE))
+                .addGap(0, 58, Short.MAX_VALUE))
         );
 
         Tabulados.addTab("CONFIGURACIÓN", jPanel6);
@@ -872,7 +887,7 @@ System.out.println("*****************************************Valor Index 0 = ");
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel15)
                     .addComponent(jtfSensor10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar)
                     .addComponent(btnGuardar))
@@ -892,8 +907,9 @@ System.out.println("*****************************************Valor Index 0 = ");
         jPanel_PrincipalLayout.setVerticalGroup(
             jPanel_PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_PrincipalLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(Tabulados, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Tabulados, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(111, 111, 111))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -915,8 +931,8 @@ System.out.println("*****************************************Valor Index 0 = ");
                 .addContainerGap()
                 .addComponent(jpanel_Domoyaya, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel_Principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel_Principal, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -1117,6 +1133,7 @@ System.out.println("*****************************************Valor Index 0 = ");
         jtf_LocalServer.setEnabled(true);
         jtf_RemoteServer.setEnabled(true);
         jtf_RemoteServer2.setEnabled(true);
+Refresh_Tabulados_Sensores(true);
 
     }//GEN-LAST:event_btn_EditarActionPerformed
 
@@ -1130,51 +1147,34 @@ System.out.println("*****************************************Valor Index 0 = ");
         jtf_RemoteServer.setEnabled(false);
         jtf_RemoteServer2.setEnabled(false);
 
-        String UserDDBB=jtf_UserDDBB.getText();
-        String PassDDBB=jtf_PassDDBB.getText();
-        String DDBB=jtf_DDBB.getText();
-        String Puerto=jtf_Puerto.getText();
-        String LocalServer=jtf_LocalServer.getText();
-        String RemoteServer=jtf_RemoteServer.getText();
-        String RemoteServer2=jtf_RemoteServer2.getText();
+        String UserDDBB = jtf_UserDDBB.getText();
+        String PassDDBB = jtf_PassDDBB.getText();
+        String DDBB = jtf_DDBB.getText();
+        String Puerto = jtf_Puerto.getText();
+        String LocalServer = jtf_LocalServer.getText();
+        String RemoteServer = jtf_RemoteServer.getText();
+        String RemoteServer2 = jtf_RemoteServer2.getText();
 
-        DatosConfig.setFormulario(UserDDBB,PassDDBB,DDBB,Puerto,LocalServer,RemoteServer,RemoteServer2);
-
+        DatosConfig.setFormulario(UserDDBB, PassDDBB, DDBB, Puerto, LocalServer, RemoteServer, RemoteServer2);
+        Refresh_Tabulados_Sensores(false);
+        System.exit(0);
     }//GEN-LAST:event_btn_GuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-           
-        
-        jtfSensor1.setEnabled(true);
-            jtfSensor2.setEnabled(true);
-            jtfSensor3.setEnabled(true);
-            jtfSensor4.setEnabled(true);
-            jtfSensor5.setEnabled(true);
-            jtfSensor6.setEnabled(true);
-            jtfSensor7.setEnabled(true);
-            jtfSensor8.setEnabled(true);
-            jtfSensor9.setEnabled(true);
-            jtfSensor10.setEnabled(true);
-
+        Refresh_Tabulados_Sensores(true);
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-            
-        
-        jtfSensor1.setEnabled(false);
-            jtfSensor2.setEnabled(false);
-            jtfSensor3.setEnabled(false);
-            jtfSensor4.setEnabled(false);
-            jtfSensor5.setEnabled(false);
-            jtfSensor6.setEnabled(false);
-            jtfSensor7.setEnabled(false);
-            jtfSensor8.setEnabled(false);
-            jtfSensor9.setEnabled(false);
-            jtfSensor10.setEnabled(false);
+        Refresh_Tabulados_Sensores(false);
 
 
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void TabuladosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabuladosStateChanged
+
+         Refresh_Tabulados_Sensores(false);
+    }//GEN-LAST:event_TabuladosStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PANEL_CONFIGURACION;

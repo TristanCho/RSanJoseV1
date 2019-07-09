@@ -66,8 +66,7 @@ public class Cls_Conexion {
     //Este método nos retorna la conexión
     public Connection getConnection() throws SQLException, ClassNotFoundException, InterruptedException{
         int contador = 0;
-        while(CN==null){
-            
+        while(CN==null){            
             Class.forName(DRIVER);
             CN = DriverManager.getConnection(UrlRemota, UserDDBB, PassDDBB);
             System.out.println("Conectando...");
@@ -75,6 +74,9 @@ public class Cls_Conexion {
             contador++;
             System.out.println("Contador="+contador);
           }
+        if (CN.isClosed()){
+            CN = DriverManager.getConnection(UrlRemota, UserDDBB, PassDDBB);
+        }
        
         /*
         catch(ClassNotFoundException | SQLException ex){
@@ -87,7 +89,7 @@ public class Cls_Conexion {
     }
     
     
-/*
+
 //Cierra conexiones abiertas a la base de datos.
     public void close(){
         try{
@@ -97,7 +99,7 @@ public class Cls_Conexion {
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al cerrar la conexión con la base de datos", JOptionPane.ERROR_MESSAGE);
         }
-    }*/
+    }
     
     
 }

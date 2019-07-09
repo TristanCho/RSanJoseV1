@@ -16,7 +16,7 @@ public class Cls_Alarma {
     private DefaultTableModel TABLA;
     private ResultSet RS;
     private PreparedStatement PS;
-    private final Cls_Conexion CN;
+    private final Cls_Conexion cnn;
 
     public boolean Armado_Notificaciones = true;
     //private final String SQL_SELECT = "SELECT *FROM `Actividad`, `Sensores` WHERE  (`Actividad`.`sensor` = `Sensores`.id_sensor) AND `Actividad`.`sensor`<>'0'" + "ORDER BY `Actividad`.`hora` DESC LIMIT 1;";
@@ -28,9 +28,9 @@ public class Cls_Alarma {
     private String UltRegistro_Hora = "";
     private String UltRegistro_Sensor = "";
 
-    public Cls_Alarma() {
+    public Cls_Alarma(Cls_Conexion cnn) {
         PS = null;
-        CN = new Cls_Conexion();
+        this.cnn = cnn;
     }
 
     private DefaultTableModel ConfiguraTitulos_Actividad() {
@@ -45,7 +45,7 @@ public class Cls_Alarma {
 
         try {
             ConfiguraTitulos_Actividad();
-            PS = CN.getConnection().prepareStatement(SQL_SELECT);
+            PS = cnn.getConnection().prepareStatement(SQL_SELECT);
             RS = PS.executeQuery();
             Object[] fila = new Object[9];
 
@@ -98,11 +98,10 @@ public class Cls_Alarma {
 
         } catch (SQLException e) {
             System.out.println("Error al Listar los datos desde Cls_Alarma: " + e.getMessage());
-            CN.getConnection();
-
         } finally {
             PS = null;
             RS = null;
+            //CN.close();
         }
         return TABLA;
     }

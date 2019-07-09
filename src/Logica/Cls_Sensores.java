@@ -1,11 +1,13 @@
 package Logica;
 
-import Conexion.Cls_Conexion_sensores;
+import Conexion.Cls_Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class Cls_Sensores {
@@ -13,15 +15,16 @@ public class Cls_Sensores {
     private DefaultTableModel TABLA_Sensores;
     private ResultSet RS_Sensores;
     private PreparedStatement PS_Sensores;
-    private final Cls_Conexion_sensores CN_Sensores;
+    private final Cls_Conexion cnn;
 
     public List<Cls_Sensor> SensorNumero = new ArrayList<>();
 
     private final String SQL_SELECT_Sensores = "SELECT * FROM `Sensores`";
 
-    public Cls_Sensores() {
+    public Cls_Sensores(Cls_Conexion cnn) {
         PS_Sensores = null;
-        CN_Sensores = new Cls_Conexion_sensores();
+        //Le pasamos una conexion ya creada
+        this.cnn = cnn;
     }
 
     private DefaultTableModel setTitulos_Sensores() {
@@ -39,7 +42,7 @@ public class Cls_Sensores {
         try {
             setTitulos_Sensores();
 
-            PS_Sensores = CN_Sensores.getConnection().prepareStatement(SQL_SELECT_Sensores);
+            PS_Sensores = cnn.getConnection().prepareStatement(SQL_SELECT_Sensores);
             RS_Sensores = PS_Sensores.executeQuery();
             Object[] fila = new Object[4];
 
@@ -57,10 +60,12 @@ public class Cls_Sensores {
         } catch (SQLException e) {
             System.out.println("Error al Listar los datos desde Consulta Sensores: " + e.getMessage());
 
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cls_Sensores.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             PS_Sensores = null;
             RS_Sensores = null;
-            //CN_Sensores.close();
+            cnn.close();
         }
         return TABLA_Sensores;
     }
