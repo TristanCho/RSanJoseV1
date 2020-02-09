@@ -6,6 +6,7 @@ import Logica.Cls_UltimaActividad;
 import Logica.VariablesConfig;
 import Logica.Cls_Alarma;
 import Logica.Cls_Sensores;
+import Logica.Cls_Puerta;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
     private final Cls_Alarma Actividad;
     private final VariablesConfig DatosConfig;
     private final Cls_UltimaActividad UltimaActividad;
+    private final Cls_Puerta Puerta;
     private final Timer Temporizador;
     private Boolean tempIsPaused;
 
@@ -39,6 +41,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
         Actividad = new Cls_Alarma(cnn);
         DatosConfig = new VariablesConfig();
         UltimaActividad = new Cls_UltimaActividad(cnn);
+        Puerta = new Cls_Puerta(cnn);
         ListadoDeSensores = new ArrayList<>();
 
         ListadoDeSensores.add(jlb_Sensor1);
@@ -87,6 +90,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
                         listar_ultimaActividad();
                         listar_Actividad();
                         listar_Sensores();
+                        listar_Puerta();
                     } catch (InterruptedException | ClassNotFoundException | SQLException ex) {
                         Logger.getLogger(Frm_Alarma.class.getName()).log(Level.SEVERE, null, ex);
                         System.out.println("Fallo en Temporizador");
@@ -103,11 +107,19 @@ public class Frm_Alarma extends javax.swing.JFrame {
         jlb_estado.setText(String.valueOf(Actividad.Cadena_Estado));
         jlb_inactividad.setText(String.valueOf(Actividad.Inactividad_Minutos) + " Minutos");
     }
-        private void listar_ultimaActividad() throws InterruptedException, ClassNotFoundException, SQLException {
+
+    private void listar_ultimaActividad() throws InterruptedException, ClassNotFoundException, SQLException {
 
         jtb_ultimaActividad.setModel(UltimaActividad.Tabla_UltimaActividad());
-       
+
     }
+
+    private void listar_Puerta() throws InterruptedException, ClassNotFoundException, SQLException {
+
+        jtb_puerta.setModel(Puerta.Tabla_Puerta());
+
+    }
+
     private void listar_Sensores() throws InterruptedException {
 
         jtb_sensores.setModel(Sensores_Registrados.TomoDatos_Sensores());
@@ -173,12 +185,14 @@ public class Frm_Alarma extends javax.swing.JFrame {
         jlb_Sensor9 = new javax.swing.JRadioButton();
         jlb_Sensor10 = new javax.swing.JRadioButton();
         jcb_armadoNotificaciones = new javax.swing.JCheckBox();
-        jPanel4 = new javax.swing.JPanel();
+        PanelRegistros = new javax.swing.JPanel();
         BaseRegistro = new javax.swing.JPanel();
         base_ultimaActividad = new javax.swing.JScrollPane();
         jtb_ultimaActividad = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        base_puerta = new javax.swing.JScrollPane();
+        jtb_puerta = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         PANEL_CONFIGURACION = new javax.swing.JPanel();
@@ -235,7 +249,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
         TITULO.setFont(new java.awt.Font("Segoe Script", 0, 32)); // NOI18N
         TITULO.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         TITULO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Domoyaya - copia.png"))); // NOI18N
-        TITULO.setText("DOMOYAYA 19-07-05");
+        TITULO.setText("DOMOYAYA 20-02-09");
         TITULO.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         javax.swing.GroupLayout jpanel_DomoyayaLayout = new javax.swing.GroupLayout(jpanel_Domoyaya);
@@ -483,22 +497,35 @@ public class Frm_Alarma extends javax.swing.JFrame {
 
         jLabel8.setText("Puerta");
 
+        jtb_puerta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        base_puerta.setViewportView(jtb_puerta);
+
         javax.swing.GroupLayout BaseRegistroLayout = new javax.swing.GroupLayout(BaseRegistro);
         BaseRegistro.setLayout(BaseRegistroLayout);
         BaseRegistroLayout.setHorizontalGroup(
             BaseRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BaseRegistroLayout.createSequentialGroup()
-                .addGroup(BaseRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(BaseRegistroLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(base_ultimaActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(BaseRegistroLayout.createSequentialGroup()
-                        .addGap(217, 217, 217)
-                        .addComponent(jLabel8))
-                    .addGroup(BaseRegistroLayout.createSequentialGroup()
+                .addGap(217, 217, 217)
+                .addComponent(jLabel8)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BaseRegistroLayout.createSequentialGroup()
+                .addGroup(BaseRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, BaseRegistroLayout.createSequentialGroup()
                         .addGap(198, 198, 198)
-                        .addComponent(jLabel1)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, BaseRegistroLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(BaseRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(base_ultimaActividad, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                            .addComponent(base_puerta, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         BaseRegistroLayout.setVerticalGroup(
             BaseRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,26 +533,30 @@ public class Frm_Alarma extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(base_ultimaActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(base_ultimaActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel8)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(base_puerta, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BaseRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout PanelRegistrosLayout = new javax.swing.GroupLayout(PanelRegistros);
+        PanelRegistros.setLayout(PanelRegistrosLayout);
+        PanelRegistrosLayout.setHorizontalGroup(
+            PanelRegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelRegistrosLayout.createSequentialGroup()
                 .addComponent(BaseRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+        PanelRegistrosLayout.setVerticalGroup(
+            PanelRegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelRegistrosLayout.createSequentialGroup()
+                .addComponent(BaseRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 37, Short.MAX_VALUE))
+        );
 
-        Tabulados.addTab("REGISTROS", jPanel4);
+        Tabulados.addTab("REGISTROS", PanelRegistros);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1186,7 +1217,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
         jtf_LocalServer.setEnabled(true);
         jtf_RemoteServer.setEnabled(true);
         jtf_RemoteServer2.setEnabled(true);
-Refresh_Tabulados_Sensores(true);
+        Refresh_Tabulados_Sensores(true);
 
     }//GEN-LAST:event_btn_EditarActionPerformed
 
@@ -1226,14 +1257,16 @@ Refresh_Tabulados_Sensores(true);
 
     private void TabuladosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabuladosStateChanged
 
-         Refresh_Tabulados_Sensores(false);
+        Refresh_Tabulados_Sensores(false);
     }//GEN-LAST:event_TabuladosStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BaseRegistro;
     private javax.swing.JPanel PANEL_CONFIGURACION;
+    private javax.swing.JPanel PanelRegistros;
     private javax.swing.JLabel TITULO;
     private javax.swing.JTabbedPane Tabulados;
+    private javax.swing.JScrollPane base_puerta;
     private javax.swing.JScrollPane base_ultimaActividad;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
@@ -1264,7 +1297,6 @@ Refresh_Tabulados_Sensores(true);
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
@@ -1287,6 +1319,7 @@ Refresh_Tabulados_Sensores(true);
     private javax.swing.JLabel jlb_inactividad;
     private javax.swing.JPanel jpanel_Domoyaya;
     private javax.swing.JTable jtb_Actividad;
+    private javax.swing.JTable jtb_puerta;
     private javax.swing.JTable jtb_sensores;
     private javax.swing.JTable jtb_ultimaActividad;
     private javax.swing.JTextField jtfSensor1;
