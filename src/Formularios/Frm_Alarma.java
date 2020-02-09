@@ -2,6 +2,7 @@
 package Formularios;
 
 import Conexion.Cls_Conexion;
+import Logica.Cls_UltimaActividad;
 import Logica.VariablesConfig;
 import Logica.Cls_Alarma;
 import Logica.Cls_Sensores;
@@ -20,6 +21,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
     private final Cls_Sensores Sensores_Registrados;
     private final Cls_Alarma Actividad;
     private final VariablesConfig DatosConfig;
+    private final Cls_UltimaActividad UltimaActividad;
     private final Timer Temporizador;
     private Boolean tempIsPaused;
 
@@ -36,6 +38,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
         Sensores_Registrados = new Cls_Sensores(cnn);
         Actividad = new Cls_Alarma(cnn);
         DatosConfig = new VariablesConfig();
+        UltimaActividad = new Cls_UltimaActividad(cnn);
         ListadoDeSensores = new ArrayList<>();
 
         ListadoDeSensores.add(jlb_Sensor1);
@@ -81,6 +84,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
                 if (!tempIsPaused) {
                     System.out.println("Temporizador Actualizado");
                     try {
+                        listar_ultimaActividad();
                         listar_Actividad();
                         listar_Sensores();
                     } catch (InterruptedException | ClassNotFoundException | SQLException ex) {
@@ -99,7 +103,11 @@ public class Frm_Alarma extends javax.swing.JFrame {
         jlb_estado.setText(String.valueOf(Actividad.Cadena_Estado));
         jlb_inactividad.setText(String.valueOf(Actividad.Inactividad_Minutos) + " Minutos");
     }
+        private void listar_ultimaActividad() throws InterruptedException, ClassNotFoundException, SQLException {
 
+        jtb_ultimaActividad.setModel(UltimaActividad.Tabla_UltimaActividad());
+       
+    }
     private void listar_Sensores() throws InterruptedException {
 
         jtb_sensores.setModel(Sensores_Registrados.TomoDatos_Sensores());
@@ -166,8 +174,12 @@ public class Frm_Alarma extends javax.swing.JFrame {
         jlb_Sensor10 = new javax.swing.JRadioButton();
         jcb_armadoNotificaciones = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        BaseRegistro = new javax.swing.JPanel();
+        base_ultimaActividad = new javax.swing.JScrollPane();
+        jtb_ultimaActividad = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         PANEL_CONFIGURACION = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
@@ -453,36 +465,77 @@ public class Frm_Alarma extends javax.swing.JFrame {
 
         Tabulados.addTab("ACTIVIDAD", jPanel1);
 
+        BaseRegistro.setBackground(new java.awt.Color(204, 255, 204));
+
+        base_ultimaActividad.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jtb_ultimaActividad.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        base_ultimaActividad.setViewportView(jtb_ultimaActividad);
+
+        jLabel1.setText("Ultima Actividad");
+
+        jLabel8.setText("Puerta");
+
+        javax.swing.GroupLayout BaseRegistroLayout = new javax.swing.GroupLayout(BaseRegistro);
+        BaseRegistro.setLayout(BaseRegistroLayout);
+        BaseRegistroLayout.setHorizontalGroup(
+            BaseRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BaseRegistroLayout.createSequentialGroup()
+                .addGroup(BaseRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BaseRegistroLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(base_ultimaActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(BaseRegistroLayout.createSequentialGroup()
+                        .addGap(217, 217, 217)
+                        .addComponent(jLabel8))
+                    .addGroup(BaseRegistroLayout.createSequentialGroup()
+                        .addGap(198, 198, 198)
+                        .addComponent(jLabel1)))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        BaseRegistroLayout.setVerticalGroup(
+            BaseRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BaseRegistroLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(base_ultimaActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addContainerGap(249, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 499, Short.MAX_VALUE)
+            .addComponent(BaseRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 536, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(BaseRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         Tabulados.addTab("REGISTROS", jPanel4);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/grafico-radial.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(132, Short.MAX_VALUE))
+            .addGap(0, 499, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addContainerGap(216, Short.MAX_VALUE))
+            .addGap(0, 536, Short.MAX_VALUE)
         );
 
         Tabulados.addTab("GRÁFICOS", jPanel5);
@@ -840,7 +893,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
                         .addComponent(btnModificar)
                         .addGap(96, 96, 96)
                         .addComponent(btnGuardar)))
-                .addContainerGap(180, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1177,9 +1230,11 @@ Refresh_Tabulados_Sensores(true);
     }//GEN-LAST:event_TabuladosStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BaseRegistro;
     private javax.swing.JPanel PANEL_CONFIGURACION;
     private javax.swing.JLabel TITULO;
     private javax.swing.JTabbedPane Tabulados;
+    private javax.swing.JScrollPane base_ultimaActividad;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btn_Editar;
@@ -1205,6 +1260,7 @@ Refresh_Tabulados_Sensores(true);
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1232,6 +1288,7 @@ Refresh_Tabulados_Sensores(true);
     private javax.swing.JPanel jpanel_Domoyaya;
     private javax.swing.JTable jtb_Actividad;
     private javax.swing.JTable jtb_sensores;
+    private javax.swing.JTable jtb_ultimaActividad;
     private javax.swing.JTextField jtfSensor1;
     private javax.swing.JTextField jtfSensor10;
     private javax.swing.JTextField jtfSensor2;
