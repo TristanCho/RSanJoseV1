@@ -7,6 +7,7 @@ import Logica.VariablesConfig;
 import Logica.Cls_Alarma;
 import Logica.Cls_Sensores;
 import Logica.Cls_Puerta;
+import Logica.Cls_Estadisticas;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
     private final VariablesConfig DatosConfig;
     private final Cls_UltimaActividad UltimaActividad;
     private final Cls_Puerta Puerta;
+    private final Cls_Estadisticas Estadisticas;
     private final Timer Temporizador;
     private Boolean tempIsPaused;
 
@@ -42,6 +44,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
         DatosConfig = new VariablesConfig();
         UltimaActividad = new Cls_UltimaActividad(cnn);
         Puerta = new Cls_Puerta(cnn);
+        Estadisticas = new Cls_Estadisticas();
         ListadoDeSensores = new ArrayList<>();
 
         ListadoDeSensores.add(jlb_Sensor1);
@@ -163,7 +166,7 @@ public class Frm_Alarma extends javax.swing.JFrame {
         jpanel_Domoyaya = new javax.swing.JPanel();
         TITULO = new javax.swing.JLabel();
         Tabulados = new javax.swing.JTabbedPane();
-        BaseActividad = new javax.swing.JPanel();
+        PanelActividad = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtb_Actividad = new javax.swing.JTable();
@@ -190,7 +193,9 @@ public class Frm_Alarma extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         base_puerta = new javax.swing.JScrollPane();
         jtb_puerta = new javax.swing.JTable();
-        baseGraficos = new javax.swing.JPanel();
+        PanelEstadisticas = new javax.swing.JPanel();
+        base_estadisticas = new javax.swing.JPanel();
+        btn_GenerarGrafico = new javax.swing.JButton();
         baseConfiguracion = new javax.swing.JPanel();
         PANEL_CONFIGURACION = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
@@ -446,24 +451,24 @@ public class Frm_Alarma extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout BaseActividadLayout = new javax.swing.GroupLayout(BaseActividad);
-        BaseActividad.setLayout(BaseActividadLayout);
-        BaseActividadLayout.setHorizontalGroup(
-            BaseActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BaseActividadLayout.createSequentialGroup()
+        javax.swing.GroupLayout PanelActividadLayout = new javax.swing.GroupLayout(PanelActividad);
+        PanelActividad.setLayout(PanelActividadLayout);
+        PanelActividadLayout.setHorizontalGroup(
+            PanelActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelActividadLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(273, Short.MAX_VALUE))
+                .addContainerGap(305, Short.MAX_VALUE))
         );
-        BaseActividadLayout.setVerticalGroup(
-            BaseActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BaseActividadLayout.createSequentialGroup()
+        PanelActividadLayout.setVerticalGroup(
+            PanelActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelActividadLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(369, 369, 369))
         );
 
-        Tabulados.addTab("ACTIVIDAD", BaseActividad);
+        Tabulados.addTab("ACTIVIDAD", PanelActividad);
 
         BaseRegistro.setBackground(new java.awt.Color(204, 255, 204));
 
@@ -541,18 +546,50 @@ public class Frm_Alarma extends javax.swing.JFrame {
 
         Tabulados.addTab("REGISTROS", PanelRegistros);
 
-        javax.swing.GroupLayout baseGraficosLayout = new javax.swing.GroupLayout(baseGraficos);
-        baseGraficos.setLayout(baseGraficosLayout);
-        baseGraficosLayout.setHorizontalGroup(
-            baseGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 932, Short.MAX_VALUE)
+        btn_GenerarGrafico.setBackground(new java.awt.Color(204, 204, 204));
+        btn_GenerarGrafico.setForeground(new java.awt.Color(51, 51, 255));
+        btn_GenerarGrafico.setText("Generar Gráfico");
+        btn_GenerarGrafico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_GenerarGraficoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout base_estadisticasLayout = new javax.swing.GroupLayout(base_estadisticas);
+        base_estadisticas.setLayout(base_estadisticasLayout);
+        base_estadisticasLayout.setHorizontalGroup(
+            base_estadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(base_estadisticasLayout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addComponent(btn_GenerarGrafico)
+                .addContainerGap(749, Short.MAX_VALUE))
         );
-        baseGraficosLayout.setVerticalGroup(
-            baseGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 251, Short.MAX_VALUE)
+        base_estadisticasLayout.setVerticalGroup(
+            base_estadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(base_estadisticasLayout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(btn_GenerarGrafico)
+                .addContainerGap(401, Short.MAX_VALUE))
         );
 
-        Tabulados.addTab("GRÁFICOS", baseGraficos);
+        javax.swing.GroupLayout PanelEstadisticasLayout = new javax.swing.GroupLayout(PanelEstadisticas);
+        PanelEstadisticas.setLayout(PanelEstadisticasLayout);
+        PanelEstadisticasLayout.setHorizontalGroup(
+            PanelEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelEstadisticasLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(base_estadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelEstadisticasLayout.setVerticalGroup(
+            PanelEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelEstadisticasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(base_estadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        Tabulados.addTab("ESTADISTICAS", PanelEstadisticas);
 
         PANEL_CONFIGURACION.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -731,13 +768,13 @@ public class Frm_Alarma extends javax.swing.JFrame {
             .addGroup(baseConfiguracionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PANEL_CONFIGURACION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addContainerGap(360, Short.MAX_VALUE))
         );
         baseConfiguracionLayout.setVerticalGroup(
             baseConfiguracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(baseConfiguracionLayout.createSequentialGroup()
                 .addComponent(PANEL_CONFIGURACION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 42, Short.MAX_VALUE))
+                .addGap(0, 340, Short.MAX_VALUE))
         );
 
         Tabulados.addTab("CONFIGURACIÓN", baseConfiguracion);
@@ -989,14 +1026,14 @@ public class Frm_Alarma extends javax.swing.JFrame {
             .addGroup(baseListadoSensoresLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(473, Short.MAX_VALUE))
+                .addContainerGap(505, Short.MAX_VALUE))
         );
         baseListadoSensoresLayout.setVerticalGroup(
             baseListadoSensoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(baseListadoSensoresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(352, Short.MAX_VALUE))
         );
 
         Tabulados.addTab("ListadoSensores", baseListadoSensores);
@@ -1263,22 +1300,28 @@ public class Frm_Alarma extends javax.swing.JFrame {
         Refresh_Tabulados_Sensores(false);
     }//GEN-LAST:event_TabuladosStateChanged
 
+    private void btn_GenerarGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GenerarGraficoActionPerformed
+      Estadisticas.generarBarras();
+    }//GEN-LAST:event_btn_GenerarGraficoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel BaseActividad;
     private javax.swing.JPanel BaseRegistro;
     private javax.swing.JPanel PANEL_CONFIGURACION;
+    private javax.swing.JPanel PanelActividad;
+    private javax.swing.JPanel PanelEstadisticas;
     private javax.swing.JPanel PanelRegistros;
     private javax.swing.JLabel TITULO;
     private javax.swing.JTabbedPane Tabulados;
     private javax.swing.JPanel baseConfigSensores;
     private javax.swing.JPanel baseConfiguracion;
-    private javax.swing.JPanel baseGraficos;
     private javax.swing.JPanel baseListadoSensores;
+    private javax.swing.JPanel base_estadisticas;
     private javax.swing.JScrollPane base_puerta;
     private javax.swing.JScrollPane base_ultimaActividad;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btn_Editar;
+    private javax.swing.JButton btn_GenerarGrafico;
     private javax.swing.JButton btn_Guardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
