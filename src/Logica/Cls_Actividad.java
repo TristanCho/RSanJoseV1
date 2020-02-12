@@ -10,15 +10,15 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import Cls_Sonido.Sonidos;
 
+public class Cls_Actividad {
 
-public class Cls_Alarma {
-    
     private DefaultTableModel TABLA;
     private ResultSet RS;
     private PreparedStatement PS;
     private final Cls_Conexion cnn;
 
     public boolean Armado_Notificaciones = true;
+    public boolean Silencio = false;
     //private final String SQL_SELECT = "SELECT *FROM `Actividad`, `Sensores` WHERE  (`Actividad`.`sensor` = `Sensores`.id_sensor) AND `Actividad`.`sensor`<>'0'" + "ORDER BY `Actividad`.`hora` DESC LIMIT 1;";
     private final String SQL_SELECT = "SELECT *FROM `Actividad`, `Sensores` WHERE (`Actividad`.`sensor` = `Sensores`.id_sensor) AND `Actividad`.`sensor` IN ('1','2','3','4','5','6','7','8','9','10') ORDER BY `Actividad`.`hora` DESC LIMIT 1";
 
@@ -28,7 +28,7 @@ public class Cls_Alarma {
     private String UltRegistro_Hora = "";
     private String UltRegistro_Sensor = "";
 
-    public Cls_Alarma(Cls_Conexion cnn) {
+    public Cls_Actividad(Cls_Conexion cnn) {
         PS = null;
         this.cnn = cnn;
     }
@@ -84,9 +84,16 @@ public class Cls_Alarma {
                 if ((estado >= 1) && (Armado_Notificaciones)) {
 
                     if (!UltRegistro_Hora.equals("") && !UltRegistro_Sensor.equals("") && !(UltRegistro_Hora.equals(UltimoRegistroDDBB.toString()) && UltRegistro_Sensor.equals(sensor))) {
+                        if (Silencio = false) {
+                            SonidoX.Sonido_Mouse();
+                            /*
+                            Pendiente montar el checkbox de silencio en el formulario y recibir datos desde este aqui
+                            
+                            */
+                        }
                         DesktopNotify.showDesktopMessage("Alerta de Movimiento en sensor: " + sensor, "Revisa la cámara", DesktopNotify.TIP, 15000L);
                         System.out.println("DesktopNotify Enviado");
-                        SonidoX.Sonido_Mouse();
+                        //SonidoX.Sonido_Mouse();
                     }
 
                 } else {
