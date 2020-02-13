@@ -1,14 +1,19 @@
 package Logica;
 
+import Logica.Cls_Estadistica;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class Cls_Estadisticas {
-    
+public class Cls_GraficoEstadistico {
+    //Private final Cls_Estadistica Estadistics
+    String variable1 = "";
+    //variable1 = String//Pendiente pasar valores
+    //TODO: Pendiente pasar valores a los gráficos, primero por variable y luego por array
     public static void generarBarras() {
+        
         try {
             //https://www.youtube.com/watch?v=qolbNweZVXU&t=350s
             DefaultCategoryDataset ds = new DefaultCategoryDataset();
@@ -32,7 +37,4 @@ public class Cls_Estadisticas {
             System.out.println("Error " + e);
         }
     }
-
-   }
-
-
+}

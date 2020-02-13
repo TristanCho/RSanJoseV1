@@ -7,7 +7,8 @@ import Logica.VariablesConfig;
 import Logica.Cls_Actividad;
 import Logica.Cls_Sensores;
 import Logica.Cls_Puerta;
-import Logica.Cls_Estadisticas;
+import Logica.Cls_GraficoEstadistico;
+import Logica.Cls_Estadistica;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,8 @@ public class Frm_Actividad extends javax.swing.JFrame {
     private final VariablesConfig DatosConfig;
     private final Cls_UltimaActividad UltimaActividad;
     private final Cls_Puerta Puerta;
-    private final Cls_Estadisticas Estadisticas;
+    private final Cls_GraficoEstadistico Barras;
+    private final Cls_Estadistica Estadistica;
     private final Timer Temporizador;
     private Boolean tempIsPaused;
 
@@ -44,7 +46,8 @@ public class Frm_Actividad extends javax.swing.JFrame {
         DatosConfig = new VariablesConfig();
         UltimaActividad = new Cls_UltimaActividad(cnn);
         Puerta = new Cls_Puerta(cnn);
-        Estadisticas = new Cls_Estadisticas();
+        Barras = new Cls_GraficoEstadistico();
+        Estadistica = new Cls_Estadistica(cnn);
         ListadoDeSensores = new ArrayList<>();
 
         ListadoDeSensores.add(jlb_Sensor1);
@@ -96,6 +99,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
                         listar_Actividad();
                         listar_Sensores();
                         listar_Puerta();
+                        listar_Estadistica();
                     } catch (InterruptedException | ClassNotFoundException | SQLException ex) {
                         Logger.getLogger(Frm_Actividad.class.getName()).log(Level.SEVERE, null, ex);
                         System.out.println("Fallo en Temporizador");
@@ -123,6 +127,12 @@ public class Frm_Actividad extends javax.swing.JFrame {
 
         jtb_puerta.setModel(Puerta.Tabla_Puerta());
 
+    }
+    private void listar_Estadistica() throws InterruptedException, ClassNotFoundException, SQLException {
+
+        jtb_Estadisticas.setModel(Estadistica.Tabla_Estadistica());
+        jlb_ValorPrueba.setText(String.valueOf(Estadistica.ValorPrueba));
+       
     }
 
     private void listar_Sensores() throws InterruptedException {
@@ -201,6 +211,8 @@ public class Frm_Actividad extends javax.swing.JFrame {
         btn_GenerarGrafico = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtb_Estadisticas = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        jlb_ValorPrueba = new javax.swing.JLabel();
         baseConfiguracion = new javax.swing.JPanel();
         PANEL_CONFIGURACION = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
@@ -296,6 +308,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
 
         jLabel5.setText("Inactividad:");
 
+        jlb_inactividad.setAlignmentX(0.5F);
         jlb_inactividad.setBorder(new javax.swing.border.MatteBorder(null));
 
         jlb_estado.setBorder(new javax.swing.border.MatteBorder(null));
@@ -413,8 +426,8 @@ public class Frm_Actividad extends javax.swing.JFrame {
                                 .addComponent(jlb_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlb_inactividad, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jlb_inactividad, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(40, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -581,24 +594,41 @@ public class Frm_Actividad extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jtb_Estadisticas);
 
+        jLabel9.setText("Día de Hoy");
+
+        jlb_ValorPrueba.setText("ValorPrueba");
+
         javax.swing.GroupLayout base_estadisticasLayout = new javax.swing.GroupLayout(base_estadisticas);
         base_estadisticas.setLayout(base_estadisticasLayout);
         base_estadisticasLayout.setHorizontalGroup(
             base_estadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, base_estadisticasLayout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
+                .addGap(275, 275, 275)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_GenerarGrafico)
                 .addGap(54, 54, 54))
+            .addGroup(base_estadisticasLayout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(127, 127, 127)
+                .addComponent(jlb_ValorPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         base_estadisticasLayout.setVerticalGroup(
             base_estadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(base_estadisticasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(base_estadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(base_estadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_GenerarGrafico)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9))
+                .addGroup(base_estadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(base_estadisticasLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(base_estadisticasLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jlb_ValorPrueba)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1327,7 +1357,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
     }//GEN-LAST:event_TabuladosStateChanged
 
     private void btn_GenerarGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GenerarGraficoActionPerformed
-      Estadisticas.generarBarras();
+      Barras.generarBarras();
     }//GEN-LAST:event_btn_GenerarGraficoActionPerformed
 
     private void jcb_sonidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_sonidoActionPerformed
@@ -1384,6 +1414,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1402,6 +1433,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
     private javax.swing.JRadioButton jlb_Sensor7;
     private javax.swing.JRadioButton jlb_Sensor8;
     private javax.swing.JRadioButton jlb_Sensor9;
+    private javax.swing.JLabel jlb_ValorPrueba;
     private javax.swing.JLabel jlb_estado;
     private javax.swing.JLabel jlb_inactividad;
     private javax.swing.JPanel jpanel_Domoyaya;
