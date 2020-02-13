@@ -18,7 +18,7 @@ public class Cls_Actividad {
     private final Cls_Conexion cnn;
 
     public boolean Armado_Notificaciones = true;
-    public boolean Silencio = false;
+    public boolean Sonido = true;
     //private final String SQL_SELECT = "SELECT *FROM `Actividad`, `Sensores` WHERE  (`Actividad`.`sensor` = `Sensores`.id_sensor) AND `Actividad`.`sensor`<>'0'" + "ORDER BY `Actividad`.`hora` DESC LIMIT 1;";
     private final String SQL_SELECT = "SELECT *FROM `Actividad`, `Sensores` WHERE (`Actividad`.`sensor` = `Sensores`.id_sensor) AND `Actividad`.`sensor` IN ('1','2','3','4','5','6','7','8','9','10') ORDER BY `Actividad`.`hora` DESC LIMIT 1";
 
@@ -69,7 +69,7 @@ public class Cls_Actividad {
                 long Inactividad_min = (Inactividad_mS / 60) / 1000;
                 Cadena_Estado = String.valueOf(estado);
                 Inactividad_Minutos = String.valueOf(Inactividad_min);
-
+                /*
                 String message = "";
                 message += "Inactividad_Minutos= " + Inactividad_Minutos + "\n";
                 message += "String Estado = " + Cadena_Estado + "\n";
@@ -81,18 +81,20 @@ public class Cls_Actividad {
                 message += ("Inactividad_mS: " + Inactividad_mS) + "\n";
                 message += ("------------------------------------------------------------------------------------") + "\n";
                 System.out.println(message);
+                 */
                 if ((estado >= 1) && (Armado_Notificaciones)) {
 
                     if (!UltRegistro_Hora.equals("") && !UltRegistro_Sensor.equals("") && !(UltRegistro_Hora.equals(UltimoRegistroDDBB.toString()) && UltRegistro_Sensor.equals(sensor))) {
-                        if (Silencio = false) {
+                        System.out.println("Valor de Sonido-------- " + Sonido);
+                        if (Sonido == true) {
+                            System.out.println("jcb activado");
                             SonidoX.Sonido_Mouse();
-                            /*
-                            Pendiente montar el checkbox de silencio en el formulario y recibir datos desde este aqui
-                            
-                            */
+                            //DesktopNotify.showDesktopMessage("Alerta de Movimiento en sensor: " + sensor, "Revisa la cámara", DesktopNotify.TIP, 15000L);
+                        } else {
+                           System.out.println("jcb inactivo");
                         }
                         DesktopNotify.showDesktopMessage("Alerta de Movimiento en sensor: " + sensor, "Revisa la cámara", DesktopNotify.TIP, 15000L);
-                        System.out.println("DesktopNotify Enviado");
+                        //System.out.println("DesktopNotify Enviado");
                         //SonidoX.Sonido_Mouse();
                     }
 

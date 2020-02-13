@@ -9,7 +9,7 @@ public class Sonido{
        
         sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Cls_Sonido/Mouse.wav"));
         sonido.play();
-        System.out.println("Sonido ON");
+       // System.out.println("Sonido ON");
       }
    }
 

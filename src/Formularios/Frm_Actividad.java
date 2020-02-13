@@ -75,14 +75,12 @@ public class Frm_Actividad extends javax.swing.JFrame {
             radioButton.setSelected(rootPaneCheckingEnabled);
             auxInt++;
         }
-        System.out.println("*****************************************Valor Index 0 = ");
+        //System.out.println("*****************************************Valor Index 0 = ");
+        jcb_sonido.setSelected(true);
+        Actividad.Sonido = true;
         jcb_armadoNotificaciones.setSelected(true);
-        jcb_silencio.setSelected(false);
         Actividad.Armado_Notificaciones = true;
-        Actividad.Silencio = false;
-       
         
-
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ALERTA.png")).getImage());
         setLocationRelativeTo(null);
 
@@ -92,7 +90,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
             @Override
             public void run() {
                 if (!tempIsPaused) {
-                    System.out.println("Temporizador Actualizado");
+                    //System.out.println("Temporizador Actualizado");
                     try {
                         listar_ultimaActividad();
                         listar_Actividad();
@@ -189,7 +187,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
         jlb_Sensor9 = new javax.swing.JRadioButton();
         jlb_Sensor10 = new javax.swing.JRadioButton();
         jcb_armadoNotificaciones = new javax.swing.JCheckBox();
-        jcb_silencio = new javax.swing.JCheckBox();
+        jcb_sonido = new javax.swing.JCheckBox();
         PanelRegistros = new javax.swing.JPanel();
         BaseRegistro = new javax.swing.JPanel();
         base_ultimaActividad = new javax.swing.JScrollPane();
@@ -379,10 +377,10 @@ public class Frm_Actividad extends javax.swing.JFrame {
             }
         });
 
-        jcb_silencio.setText(" SILENCIO");
-        jcb_silencio.addActionListener(new java.awt.event.ActionListener() {
+        jcb_sonido.setText("SONIDO");
+        jcb_sonido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcb_silencioActionPerformed(evt);
+                jcb_sonidoActionPerformed(evt);
             }
         });
 
@@ -422,7 +420,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jcb_armadoNotificaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcb_silencio))
+                            .addComponent(jcb_sonido))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -430,7 +428,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jcb_armadoNotificaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jcb_silencio)
+                .addComponent(jcb_sonido)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1318,17 +1316,13 @@ public class Frm_Actividad extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         Refresh_Tabulados_Sensores(true);
-
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Refresh_Tabulados_Sensores(false);
-
-
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void TabuladosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabuladosStateChanged
-
         Refresh_Tabulados_Sensores(false);
     }//GEN-LAST:event_TabuladosStateChanged
 
@@ -1336,17 +1330,18 @@ public class Frm_Actividad extends javax.swing.JFrame {
       Estadisticas.generarBarras();
     }//GEN-LAST:event_btn_GenerarGraficoActionPerformed
 
-    private void jcb_silencioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_silencioActionPerformed
-       if(jcb_silencio.isSelected()){
-           System.out.println("silencio activado");
-           Actividad.Silencio = true;
-       }else if(!jcb_silencio.isSelected()){
-           System.out.println(" silencio desactivado");
-           Actividad.Silencio = false;
+    private void jcb_sonidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_sonidoActionPerformed
+       if(jcb_sonido.isSelected()){
+           
+           jcb_sonido.setSelected(true);
+           Actividad.Sonido = true;
+       }else if(jcb_sonido.isSelected()== false){
+           System.out.println(" jcb desactivado");
+           Actividad.Sonido = false;
        }else{
-           System.out.println(" Casilla silencio sin identificar");
+           System.out.println(" Casilla Sonido sin identificar");
        }
-    }//GEN-LAST:event_jcb_silencioActionPerformed
+    }//GEN-LAST:event_jcb_sonidoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BaseRegistro;
@@ -1396,7 +1391,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel jbl_InfoConfiguracion;
     private javax.swing.JCheckBox jcb_armadoNotificaciones;
-    private javax.swing.JCheckBox jcb_silencio;
+    private javax.swing.JCheckBox jcb_sonido;
     private javax.swing.JRadioButton jlb_Sensor1;
     private javax.swing.JRadioButton jlb_Sensor10;
     private javax.swing.JRadioButton jlb_Sensor2;

@@ -180,7 +180,7 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jcb_armadoNotificaciones" min="-2" pref="143" max="-2" attributes="0"/>
-                                      <Component id="jcb_silencio" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jcb_sonido" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -193,7 +193,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jcb_armadoNotificaciones" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jcb_silencio" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb_sonido" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="11" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
@@ -382,13 +382,16 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcb_armadoNotificacionesActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Frm_Actividad_jcb_armadoNotificaciones"/>
+                  </AuxValues>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="jcb_silencio">
+                <Component class="javax.swing.JCheckBox" name="jcb_sonido">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value=" SILENCIO"/>
+                    <Property name="text" type="java.lang.String" value="SONIDO"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcb_silencioActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcb_sonidoActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

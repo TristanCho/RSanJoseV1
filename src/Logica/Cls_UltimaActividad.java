@@ -31,7 +31,7 @@ public class Cls_UltimaActividad {
       public DefaultTableModel Tabla_UltimaActividad() throws InterruptedException, ClassNotFoundException, SQLException {
 
         try {
-            System.out.println("Desde el try de ultima actividad");
+            //System.out.println("Desde el try de ultima actividad");
             ConfiguraTitulos_ultimaActividad();
             PS = cnn.getConnection().prepareStatement(SQL_SELECT);
             RS = PS.executeQuery();

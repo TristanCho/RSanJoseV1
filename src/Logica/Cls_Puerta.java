@@ -30,7 +30,7 @@ public class Cls_Puerta {
     public DefaultTableModel Tabla_Puerta() throws InterruptedException, ClassNotFoundException, SQLException {
 
         try {
-            System.out.println("Desde el try de puerta");
+            //System.out.println("Desde el try de puerta");
             ConfiguraTitulos_Puerta();
             PS = cnn.getConnection().prepareStatement(SQL_SELECT);
             RS = PS.executeQuery();

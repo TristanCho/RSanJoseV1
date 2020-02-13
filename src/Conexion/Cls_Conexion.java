@@ -26,6 +26,7 @@ public class Cls_Conexion {
     private Connection CN;
   
     public Cls_Conexion() {
+        /*
          System.out.println("UserDDBB==== "+UserDDBB);
          System.out.println("PassDDBB==== "+PassDDBB);
          System.out.println("DDBB==== "+DDBB);
@@ -35,11 +36,12 @@ public class Cls_Conexion {
          System.out.println("Puerto====="+PUERTO);
          
          System.out.println("//////////////////////////////////////");
+        */
         DatosConfig = new VariablesConfig();
         
         UserDDBB =DatosConfig.dimeUser();
        // DatosConfig.setUser();
-       System.out.println("UserDDBB   Modificado  ???==== "+UserDDBB);
+       //System.out.println("UserDDBB   Modificado  ???==== "+UserDDBB);
         PassDDBB = DatosConfig.dimePass();
         DDBB =DatosConfig.dimeDDBB();
         RemoteServer = DatosConfig.dimeRemoteServer();
@@ -47,7 +49,7 @@ public class Cls_Conexion {
         LocalServer = DatosConfig.dimeLocalServer();
         PUERTO = DatosConfig.dimePuerto();
         UrlRemota=  "jdbc:mysql://"+RemoteServer+":"+PUERTO+"/"+DDBB+"?autoReconnect=true&useSSL=false";
-      
+      /*
          System.out.println("UserDDBB==== "+UserDDBB);
          System.out.println("PassDDBB==== "+PassDDBB);
          System.out.println("DDBB==== "+DDBB);
@@ -55,7 +57,7 @@ public class Cls_Conexion {
          System.out.println("RemoteServer====="+RemoteServer);
          System.out.println("RemoteServer2====="+RemoteServer2);
          System.out.println("Puerto====="+PUERTO);
-      
+      */
       
        //System.out.println("Usuario dimeUser()==="+UserDDBB);
         //System.out.println("Usuario desde el formulario=="+getText.jtf_UserDDBB);
@@ -69,10 +71,10 @@ public class Cls_Conexion {
         while(CN==null){            
             Class.forName(DRIVER);
             CN = DriverManager.getConnection(UrlRemota, UserDDBB, PassDDBB);
-            System.out.println("Conectando...");
+            //System.out.println("Conectando...");
             //Thread.sleep(5000);
             contador++;
-            System.out.println("Contador="+contador);
+            //System.out.println("Contador="+contador);
           }
         if (CN.isClosed()){
             CN = DriverManager.getConnection(UrlRemota, UserDDBB, PassDDBB);
@@ -93,9 +95,9 @@ public class Cls_Conexion {
 //Cierra conexiones abiertas a la base de datos.
     public void close(){
         try{
-            System.out.println("Cerrando Conexión");
+            //System.out.println("Cerrando Conexión");
             CN.close();
-            System.out.println("Conexión Cerrada");
+           // System.out.println("Conexión Cerrada");
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al cerrar la conexión con la base de datos", JOptionPane.ERROR_MESSAGE);
         }

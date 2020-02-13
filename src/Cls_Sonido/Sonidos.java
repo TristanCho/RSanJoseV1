@@ -9,13 +9,13 @@ public class Sonidos{
        
         sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Cls_Sonido/Mouse.wav"));
         sonido.play();
-        System.out.println("Sonido Mouse ON");
+       // System.out.println("Sonido Mouse ON");
       }
        public void Sonido_Alarm(){
        
         sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Cls_Sonido/Alarm.wav"));
         sonido.play();
-        System.out.println("Sonido Alarm ON");
+        //System.out.println("Sonido Alarm ON");
       }
    }
 
