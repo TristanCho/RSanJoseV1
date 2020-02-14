@@ -10,7 +10,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class VariablesConfig {
    
    public String UserDDBB;
@@ -21,8 +20,8 @@ public class VariablesConfig {
    public String RemoteServer2;
    public String Puerto;
    
-
    Properties Propiedades = new Properties();
+   
  public VariablesConfig(){
      
          //Declara objeto para las Propiedades
@@ -55,12 +54,9 @@ public class VariablesConfig {
          System.out.println("RemoteServer====="+RemoteServer);
          System.out.println("RemoteServer2====="+RemoteServer2);
          System.out.println("Puerto====="+Puerto);
-         */
-               
+         */              
  }
-public String dimeUser(){
-     return UserDDBB;
- } 
+
 public void setFormulario(String UserDDBB,String PassDDBB,String DDBB,String Puerto,String LocalServer,String RemoteServer,String RemoteServer2){
      
     this.UserDDBB=UserDDBB;
@@ -91,11 +87,12 @@ public void setFormulario(String UserDDBB,String PassDDBB,String DDBB,String Pue
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
    } 
- 
+public String dimeUser(){
+     return UserDDBB;
+ }  
 public String dimePass(){
      return PassDDBB;
  } 
-/////////////////////////////////////////////Pendiente por hacer los Setters de cada metodo Getter*********************************************
 public String dimeDDBB(){
      return DDBB;
  } 
@@ -112,8 +109,7 @@ public String dimeDDBB(){
  
  public String dimeRemoteServer2(){
      return RemoteServer2;
- } 
- 
+ }  
  public void Guardar(String UserDDBB){
      this.UserDDBB=UserDDBB;
             System.out.println("Boton Guardar Presionado= "+UserDDBB);

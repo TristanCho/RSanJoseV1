@@ -7,7 +7,6 @@ import Logica.VariablesConfig;
 import Logica.Cls_Actividad;
 import Logica.Cls_Sensores;
 import Logica.Cls_Puerta;
-import Logica.Cls_GraficoEstadistico;
 import Logica.Cls_Estadistica;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
     private final VariablesConfig DatosConfig;
     private final Cls_UltimaActividad UltimaActividad;
     private final Cls_Puerta Puerta;
-    private final Cls_GraficoEstadistico Barras;
+    private final Cls_Estadistica Barras;
     private final Cls_Estadistica Estadistica;
     private final Timer Temporizador;
     private Boolean tempIsPaused;
@@ -46,7 +45,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
         DatosConfig = new VariablesConfig();
         UltimaActividad = new Cls_UltimaActividad(cnn);
         Puerta = new Cls_Puerta(cnn);
-        Barras = new Cls_GraficoEstadistico();
+        Barras = new Cls_Estadistica(cnn);
         Estadistica = new Cls_Estadistica(cnn);
         ListadoDeSensores = new ArrayList<>();
 
@@ -131,7 +130,7 @@ public class Frm_Actividad extends javax.swing.JFrame {
     private void listar_Estadistica() throws InterruptedException, ClassNotFoundException, SQLException {
 
         jtb_Estadisticas.setModel(Estadistica.Tabla_Estadistica());
-        jlb_ValorPrueba.setText(String.valueOf(Estadistica.ValorPrueba));
+        //jlb_ValorPrueba.setText(String.valueOf(Estadistica.ValorPrueba));
        
     }
 
