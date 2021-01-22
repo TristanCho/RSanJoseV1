@@ -30,6 +30,9 @@ public class VariablesConfig {
         InputStream Archivo;
        
         try {
+            /*
+            Seleccionar la ruta dependiendo si se va a usar el compilado o el IDE
+            */
             Archivo = new FileInputStream("src/Archivador/ArchivoPropiedades.properties");
             //Archivo = new FileInputStream("..//Archivador/ArchivoPropiedades.properties");
             Propiedades.load(Archivo);
@@ -79,7 +82,9 @@ public void setFormulario(String UserDDBB,String PassDDBB,String DDBB,String Pue
         Propiedades.setProperty("Puerto", Puerto);
         
             //Graba el Archivo con las modificaciones realizadas
-           
+            /*
+            Seleccionar la ruta dependiendo si se va a usar el compilado o el IDE
+            */
             //Propiedades.store(new FileWriter("..//Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
             Propiedades.store(new FileWriter("src/Archivador/ArchivoPropiedades.properties"), "Propiedades Actualizadas Correctamente");
             

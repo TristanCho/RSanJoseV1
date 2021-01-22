@@ -12,7 +12,7 @@ public class Cls_Puerta {
     private ResultSet RS;
     private PreparedStatement PS;
     private final Cls_Conexion cnn;
-    private final String SQL_SELECT = "SELECT * FROM `PuertaX10`";
+    private final String SQL_SELECT = "SELECT * FROM `VCaro`";
 
     public Cls_Puerta(Cls_Conexion cnn) {
         PS = null;
@@ -20,9 +20,9 @@ public class Cls_Puerta {
     }
 
     private DefaultTableModel ConfiguraTitulos_Puerta() {
-        TABLA = new DefaultTableModel();
-        TABLA.addColumn("Hora");
+        TABLA = new DefaultTableModel();        
         TABLA.addColumn("Sensor");
+        TABLA.addColumn("Hora");
         return TABLA;
     }
 
@@ -37,8 +37,8 @@ public class Cls_Puerta {
             Object[] fila = new Object[2];
 
             while (RS.next()) {
-                fila[0] = RS.getTimestamp(1);
-                fila[1] = RS.getString(2);
+                fila[0] = RS.getString(1);
+                fila[1] = RS.getTimestamp(2);
                 TABLA.addRow(fila);
             }
 

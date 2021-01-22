@@ -20,7 +20,7 @@ public class Cls_Actividad {
     public boolean Armado_Notificaciones = true;
     public boolean Sonido = true;
     //private final String SQL_SELECT = "SELECT *FROM `Actividad`, `Sensores` WHERE  (`Actividad`.`sensor` = `Sensores`.id_sensor) AND `Actividad`.`sensor`<>'0'" + "ORDER BY `Actividad`.`hora` DESC LIMIT 1;";
-    private final String SQL_SELECT = "SELECT *FROM `Actividad`, `Sensores` WHERE (`Actividad`.`sensor` = `Sensores`.id_sensor) AND `Actividad`.`sensor` IN ('1','2','3','4','5','6','7','8','9','10') ORDER BY `Actividad`.`hora` DESC LIMIT 1";
+    private final String SQL_SELECT = "SELECT *FROM `Actividad`, `Sensores` WHERE (`Actividad`.`sensor` = `Sensores`.id_sensor) AND `Actividad`.`sensor` IN ('1','2','','4','5','6','7','8','9','10') ORDER BY `Actividad`.`hora` DESC LIMIT 1";
 
     private static final Sonidos SonidoX = new Sonidos();
     public String Cadena_Estado = "";

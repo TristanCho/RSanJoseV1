@@ -21,7 +21,7 @@ public class Cls_Estadistica {
     private final String SQL_SELECT = "SELECT Sensores.nombre_sensor,COUNT(sensor) as NumeroRegistros\n"
             + "FROM Actividad INNER join Sensores\n"
             + "ON Actividad.sensor = Sensores.Id_sensor\n"
-            + "where hora between cast('2019-02-13' as date) and cast('2020-02-13' as date)\n"
+            + "where hora between cast('2020-06-13' as date) and cast('2022-02-13' as date)\n"
             + "group by Actividad.sensor\n"
             + "ORDER BY Actividad.sensor ASC";
     //static String variable1;
